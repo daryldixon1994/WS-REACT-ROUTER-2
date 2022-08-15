@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import Products from "./components/Products";
+import SingleProduct from "./components/SingleProduct";
+import Layout from "./components/Layout";
+import Login from "./components/Login";
+import ProtectedRoutes from "./components/Routes/ProtectedRoutes";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route
+                        path="products"
+                        element={
+                            <ProtectedRoutes>
+                                {/* <h1>HELLO</h1> */}
+                                <Products />
+                            </ProtectedRoutes>
+                        }
+                    />
+                    <Route
+                        path="singleProduct/:id"
+                        element={
+                            <ProtectedRoutes>
+                                <SingleProduct />
+                            </ProtectedRoutes>
+                        }
+                    />
+                    <Route path="login" element={<Login />} />
+                    <Route path="*" element={<ErrorPage />} />
+                </Route>
+            </Routes>
+        </div>
+    );
 }
 
 export default App;
